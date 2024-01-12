@@ -8,6 +8,7 @@ from tmdbv3api import Movie
 import requests
 import json
 import datetime
+import logging
 from collections import OrderedDict
 import tmdbsimple as tmdb  # For TMDB API interactions
 import matplotlib.pyplot as plt
@@ -722,3 +723,30 @@ dispatcher.add_handler(CommandHandler('faq', faq))
 dispatcher.add_handler(CommandHandler('dev', dev))
 updater.start_polling()
 updater.idle()
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+
+def gpt(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Hello! I'm your ChatGPT. How can I help you?")
+
+# Message handler to process user messages
+def handle_message(update, context):
+    message_text = update.effective_message.text
+
+    response = requests.get(f"https://guruapi.tech/api/chatgpt?text={message_text}")
+    if response.status_code == 200:
+        bot_response = response.json()["response"]
+        context.bot.send_message(chat_id=update.effective_chat.id, text=bot_response)
+    else:
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Sorry, I couldn't process your request.")
+
+# Create the updater and dispatcher
+updater = Updater(BOT_TOKEN, use_context=True)
+dispatcher = updater.dispatcher
+
+# Add the handlers to the dispatcher
+start_handler = CommandHandler('gpt', gpt)
+message_handler = MessageHandler(Filters.text & (~Filters.command), handle_message)
+
+dispatcher.add_handler(start_handler)
+dispatcher.add_handler(message_handler)
