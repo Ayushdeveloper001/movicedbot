@@ -16,7 +16,7 @@ import re
 import locale
 from urllib.parse import quote
 import numpy as np  # Import NumPy for calculations
-BOT_TOKEN = '6736001898:AAGvEbkiq7NRAJJb0R4a_OKlCEMD2IxSb8c'
+BOT_TOKEN = ''
 
 command_descriptions = {
     'help': "🎬 Watch your favourite shows and movies with this open source streaming bot.\n\nUse /movie moviename command to Search Movies!\n\nUse /series seriesname command to Search Series! (Do not write Season or Episode number, you should be able to choose it in the external link)\n\n<b>Useful Commands:</b>\n\nhelp - Streaming Bot \ncopyright - Disclaimer Notice \nDMCA - Copyright Reporting \nstart - About Moviced \nfaq - Common Questions \ndev - Source Code",
@@ -30,9 +30,9 @@ command_descriptions = {
 updater = Updater(BOT_TOKEN, use_context=True)
 dispatcher = updater.dispatcher
 
-TMDB_API_KEY = 'b57e290930e5eb2ea0415ba04c435d6d'
+TMDB_API_KEY = ''
 
-tmdb.API_KEY = 'b57e290930e5eb2ea0415ba04c435d6d'
+tmdb.API_KEY = ''
 
 TMDB_SEARCH_URL = 'https://api.themoviedb.org/3/search/movie?'
 
